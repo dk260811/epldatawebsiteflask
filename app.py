@@ -41,8 +41,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env)
 #})
 
-db = SQL("sqlite:///PremierLeague.db")
+#db = SQL("sqlite:///PremierLeague.db")
 #db = "sqlite:///PremierLeague.db"
+uri = os.getenv("DATABASE_URL")
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://")
+db = SQL(uri)
 
 
 
