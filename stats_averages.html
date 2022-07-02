@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Averages
+{% endblock %}
+
+{% block main %}
+    <form action="/stats_averages" method="post">
+        <p style="color: #ffffff;">Here you can see the stats of the season you selected, click on the 
+        table header on the stat you want to sort by</p>
+        <select class="form-select mx-auto w-auto" name="season">
+            <option disabled="" selected="">Select Season</option>
+            {% for season in seasons_list %}
+                <option value="{{ season.season }}">{{ season.season }}</option>
+            {% endfor %}
+        </select>
+        <!--
+        <select class="form-select mx-auto w-auto" name="sort_table">
+            <option disabled="" selected="">Filter By</option>
+                <option value='CAST(SUM(points_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))'>Points per Game</option>
+                <option value="CAST(SUM(win_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Win Percentage</option>
+                <option value="CAST(SUM(draw_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Draw Percentage</option>
+                <option value="CAST(SUM(loss_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Loss Percentage</option>
+                <option value="CAST(SUM(full_time_goals_scored_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Goals Scored per Game</option>
+                <option value="CAST(SUM(full_time_goals_conceded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Goals Conceded per Game</option>
+                <option value="CAST(SUM(team_shots_recorded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Shots recorded per Game</option>
+                <option value="CAST(SUM(team_shots_conceded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Shots conceded per Game</option>
+                <option value="CAST(SUM(team_shots_on_target_recorded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Shots on target recorded per Game</option>
+                <option value="CAST(SUM(team_shots_on_target_conceded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Shots on target conceded per Game</option>
+                <option value="CAST(SUM(full_time_goals_scored_ft) AS REAL)/SUM(team_shots_recorded_ft)">Shot conversion</option>
+                <option value="CAST(SUM(full_time_goals_conceded_ft) AS REAL)/SUM(team_shots_conceded_ft)">Shot coversion conceded</option>
+                <option value="CAST(SUM(team_corners_recorded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Corners per Game</option>
+                <option value="CAST(SUM(team_corners_conceded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Corners per Game conceded</option>
+                <option value="CAST(SUM(team_fouls_committed_recorded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Fouls commmited per Game</option>
+                <option value="CAST(SUM(team_fouls_committed_conceded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Fouls against per Game</option>
+                <option value="CAST(SUM(team_yellow_cards_recorded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Yellow cards per Game</option>
+                <option value="CAST(SUM(team_yellow_cards_conceded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Yellow cards against per Game</option>
+                <option value="CAST(SUM(team_red_cards_recorded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Red Cards per Game</option>
+                <option value="CAST(SUM(team_red_cards_conceded_ft) AS REAL)/(SUM(win_ft)+SUM(draw_ft)+SUM(loss_ft))">Red Cards against per Game</option>
+                <option value="CAST(SUM(team_yellow_cards_recorded_ft) AS REAL)/SUM(team_fouls_committed_recorded_ft)">Bookings from fouls</option>
+        </select>
+        -->
+        <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+        <div class="mb-3">
+            <table id="averages" class="table table-hover" style="color:white;">
+                <thead>
+                    <tr> 
+                    <th scope="col">Team</th> 
+                    <th style ="cursor: pointer;" onclick="sortTable(2, 'averages')" scope="col">Points per Game</th>
+                    <th onclick="sortTable(3, 'averages')" scope="col">Win Percentage</th>
+                    <th onclick="sortTable(4, 'averages')" scope="col">Draw Percentage</th>
+                    <th onclick="sortTable(5, 'averages')" scope="col">Loss Percentage</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(6, 'averages')" scope="col">Goals Scored per Game</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(7, 'averages')" scope="col">Goals Conceded per Game</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(8, 'averages')" scope="col">Shots recorded per Game</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(9, 'averages')" scope="col">Shots conceded per Game</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(10, 'averages')" scope="col">Shots on target recorded per Game</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(11, 'averages')" scope="col">Shots on target conceded per Game</th>
+                    <th onclick="sortTable(12, 'averages')" scope="col">Shot conversion</th>
+                    <th onclick="sortTable(13, 'averages')" scope="col">Shot coversion conceded</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(14, 'averages')" scope="col">Corners per Game</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(15, 'averages')" scope="col">Corners per Game conceded</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(16, 'averages')" scope="col">Fouls commmited per Game</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(17, 'averages')" scope="col">Fouls against per Game</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(18, 'averages')" scope="col">Yellow cards per Game</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(19, 'averages')" scope="col">Yellow cards against per Game</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(20, 'averages')" scope="col">Red Cards per Game</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(21, 'averages')" scope="col">Red Cards against per Game</th>
+                    <th style onclick="sortTable(22, 'averages')" scope="col">Bookings from fouls</th>
+                    <th scope="col">Season</th>
+                    </tr>
+                </thead>
+                {% for stat in stats_list_avg %}
+                    <tr>
+                        <td class="text-start" style="color:white;">{{ stat.team }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.ppg }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.w_perc }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.d_perc }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.l_perc }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.gpg_recorded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.gpg_conceded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.spg_recorded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.spg_conceded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.sotpg_recorded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.sotpg_conceded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.shot_conversion }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.shot_conversion_against }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.cpg_recorded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.cpg_conceded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.fpg_recorded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.fpg_against }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.ycpg_recorded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.ycpg_conceded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.rcpg_recorded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.rcpg_conceded }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.booking_perc }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.season }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+{% endblock %}

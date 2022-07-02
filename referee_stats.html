@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Referee
+{% endblock %}
+
+{% block main %}
+    <form action="/referee_stats" method="post">
+        <p style="color: #ffffff;">Referee stats based on different premier league referees</p>
+        <select class="form-select mx-auto w-auto" name="season">
+            <option disabled="" selected="">Select Season</option>
+            {% for season in seasons_list %}
+                <option value="{{ season.season }}">{{ season.season }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+        <div class="mb-3">
+            <table class="table table-hover" style="color:white;">
+                <thead>
+                    <tr>
+                    <th scope="col">Games</th>
+                    <th scope="col">Name</th> 
+                    <th scope="col">Fouls Awarded</th>
+                    <th scope="col">Fouls Awarded per game</th>
+                    <th scope="col">Yellow Cards Awarded</th>
+                    <th scope="col">Red Cards Awarded</th>
+                    <th scope="col">Yellow Cards per Game</th>
+                    <th scope="col">Red Cards per Game</th>
+                    <th scope="col">Bookings from fouls</th>
+                    <th scope="col">Season</th> 
+                    </tr>
+                </thead>
+                {% for stat in ref_list %}
+                    <tr>
+                        <td class="text-start" style="color:white;">{{ stat.games }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.name }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.fouls }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.fouls_per_game }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.yellow_cards }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.red_cards }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.yellow_cards_per_game }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.red_cards_per_game }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.bookings_from_fouls }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.season }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quiz
+{% endblock %}
+
+{% block main %}
+<!--
+    <form action="/quiz" method="get">
+        <div class="mb-3">
+            
+            <select class="form-select mx-auto w-auto" name="season">
+                <option disabled="" selected="">Select Season</option>
+                {% for season in seasons_list %}
+                    <option value="{{ season.season }}">{{ season.season }}</option>
+                {% endfor %}
+            </select>
+            
+            <br>
+            <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+    -->
+
+    <!-- This template only needs a get method -->
+    <form action="/index_quiz" method="get">
+        <p style="color: #ffffff;">Please see the stats of the team you are supposed to guess</p>
+        <p style="color: #ffffff;">Based on those stats guess the team from the list of possible teams shown and write it in the input field and then click check answer</p>
+        <p style="color: #ffffff;">After clicking check answer you see if you guessed correctly and you get another question</p>
+
+        <div class="mb-3">
+            <table id="totals" class="table table-hover" style="color:white;">
+                <thead>
+                    <tr> 
+                    <th scope="col">Points</th>
+                    <th scope="col">Wins</th>
+                    <th scope="col">Draws</th>
+                    <th scope="col">Losses</th>
+                    <th scope="col">Corners</th>
+                    <th scope="col">Shots</th>
+                    <th scope="col">Fouls</th>
+                    <th scope="col">Yellow Cards</th>
+                    <th scope="col">Season</th>
+                    </tr>
+                </thead>
+                {% for stat in stats_list %}
+                    <tr>
+                        
+                        <td class="text-start" style="color:white;">{{ stat.points }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.wins }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.draws }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.losses }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.corners_for }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.shots_for }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.fouls_commited }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.yellow_cards }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.season }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <br>
+        <h3 style="color: #ffffff">The possible teams are:</h3>
+        <div class="mb-3">
+            <div class = "container">
+                <ul class="list-inline">
+                    {% for team in teams_list %}
+                        <li><a style="color:white;">{{ team.team }}</a></li>
+                    {% endfor %}
+                </ul>
+             </div>
+        </div>
+        <div class="mb-3">
+            
+            <!--
+            <button class="btn btn-primary" type="submit">Submit</button>
+        
+            <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+                crossorigin="anonymous"></script>
+
+            <script type="text/javascript">
+                $(document).on('submit','#todo-form',function(e)
+                               {
+                  console.log('hello');
+                  e.preventDefault();
+                  $.ajax({
+                    type:'POST',
+                    url:'/',
+                    data:{
+                      todo:$("#todo").val()
+                    },
+                    success:function()
+                    {
+                      alert('saved');
+                    }
+                  })
+                });
+              </script>
+              -->
+    
+    <!-- Script for the quiz input, got it from one of the Labs -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            /*
+            let correct = document.querySelector('.correct');
+            correct.addEventListener('click', function() {
+                correct.style.backgroundColor = 'green';
+                document.querySelector('#feedback1').innerHTML = 'Correct!';
+            });
+
+            let incorrects = document.querySelectorAll('.incorrect');
+            for (let i = 0; i < incorrects.length; i++){
+                incorrects[i].addEventListener('click', function() {
+                    incorrects[i].style.backgroundColor = 'red';
+                    document.querySelector('#feedback1').innerHTML = 'Incorrect';
+                });
+            }
+*/
+            document.querySelector('#check').addEventListener('click', function() {
+                let input = document.querySelector('input');
+                if (input.value === '{{answer}}') {
+                    input.style.backgroundColor = 'green';
+                    document.querySelector('#feedback2').innerHTML = 'Correct!';
+                } else {
+                    input.style.backgroundColor = 'red';
+                    document.querySelector('#feedback2').innerHTML = 'Incorrect!';
+                }
+            });
+
+        });
+    </script>
+    <div class="section">
+        <hr>
+        <!-- TODO: Add free response question here -->
+        <h3 style="color: #ffffff">What team is this?</h3>
+        <input type="text"></input>
+        <button id="check" href="javascript:delay('index_quiz')">Check Answer</button>
+
+        <p id="feedback2" style="color: #ffffff"></p>
+
+    </div>
+
+    <!-- Script to delay showing the answer longer but did not work -->
+    <script>
+        function delay (URL) {
+            setTimeout( function() { window.location = URL }, 10000 );
+        }
+    </script>
+    
+    
+</form>
+{% endblock %}

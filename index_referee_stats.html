@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index Referee
+{% endblock %}
+
+{% block main %}
+    <form action="/referee_stats" method="post">
+        <p style="color: #ffffff;">Select the season from which you want to see the stats</p>
+        
+            <select class="form-select mx-auto w-auto" name="season">
+                <option disabled="" selected="">Select Season</option>
+                {% for season in seasons_list %}
+                    <option value="{{ season.season }}">{{ season.season }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+{% endblock %}

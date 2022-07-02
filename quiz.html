@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quiz
+{% endblock %}
+
+{% block main %}
+    <!--
+    <form action="/quiz" method="post">
+        <div class="mb-3">
+            <table id="totals" class="table table-hover" style="color:white;">
+                <thead>
+                    <tr>  
+                    <th scope="col">Team</th> 
+                    <th scope="col">Points</th>
+                    <th scope="col">Wins</th>
+                    <th scope="col">Draws</th>
+                    <th scope="col">Losses</th>
+                    <th scope="col">Corners</th>
+                    <th scope="col">Shots</th>
+                    <th scope="col">Fouls</th>
+                    <th scope="col">Yellow Cards</th>
+                    </tr>
+                </thead>
+                {% for stat in stats_list %}
+                    <tr>
+                        <td class="text-start" style="color:white;">{{ stat.team_ft }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.points }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.wins }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.draws }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.losses }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.corners_for }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.shots_for }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.fouls_commited }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.yellow_cards }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <br>
+        <div class="mb-3">
+            <select class="form-select mx-auto w-auto" name="season">
+                <option disabled="" selected="">Select Team</option>
+                {% for team in teams_list %}
+                    <option value="{{ team.team }}">{{ team.team }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            /*
+            let correct = document.querySelector('.correct');
+            correct.addEventListener('click', function() {
+                correct.style.backgroundColor = 'green';
+                document.querySelector('#feedback1').innerHTML = 'Correct!';
+            });
+
+            let incorrects = document.querySelectorAll('.incorrect');
+            for (let i = 0; i < incorrects.length; i++){
+                incorrects[i].addEventListener('click', function() {
+                    incorrects[i].style.backgroundColor = 'red';
+                    document.querySelector('#feedback1').innerHTML = 'Incorrect';
+                });
+            }
+*/
+            document.querySelector('#check').addEventListener('click', function() {
+                let input = document.querySelector('input');
+                if (input.value === '8') {
+                    input.style.backgroundColor = 'green';
+                    document.querySelector('#feedback2').innerHTML = 'Correct!';
+                } else {
+                    input.style.backgroundColor = 'red';
+                    document.querySelector('#feedback2').innerHTML = 'Incorrect';
+                }
+            });
+
+        });
+        -->
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    League Table
+{% endblock %}
+
+{% block main %}
+
+    <form action="/table" method="post">
+        <select class="form-select mx-auto w-auto" name="season">
+            <option disabled="" selected="">Select Season</option>
+            {% for season in seasons_list %}
+                <option value="{{ season.season }}">{{ season.season }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <select class="form-select mx-auto w-auto" name="home_away">
+            <option disabled="" selected="">Home or Away</option>
+            
+                <option value="home">Home</option>
+                <option value="away">Away</option>
+            
+        </select>
+        <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+        <div class="mb-3">
+            <table class="table table-hover" style="color:white;">
+                <thead>
+                    <tr>
+                    <th scope="col">Placement</th>   
+                    <th scope="col">Games Played</th> 
+                    <th scope="col">Team</th>
+                    <th scope="col">Points</th>
+                    <th scope="col">Goals Scored</th>
+                    <th scope="col">Goals Conceded</th>
+                    <th scope="col">Goal Difference</th>
+                    <th scope="col">Wins</th>
+                    <th scope="col">Draws</th>
+                    <th scope="col">Losses</th>
+                    <th scope="col">Season</th>
+
+                    </tr>
+                </thead>
+                {% for team in team_list %}
+                    <tr>
+                        <td class="text-start;" style="color:white;">{{ team.place }}</td>
+                        <td class="text-start;" style="color:white;">{{ team.games }}</td>
+                        <td class="text-start;" style="color:white;">{{ team.team }}</td>
+                        <td class="text-start;" style="color:white;">{{ team.points }}</td>
+                        <td class="text-start;" style="color:white;">{{ team.goals_scored }}</td>
+                        <td class="text-start;" style="color:white;">{{ team.goals_conceded }}</td>
+                        <td class="text-start;" style="color:white;">{{ team.goal_difference }}</td>
+                        <td class="text-start;" style="color:white;">{{ team.win }}</td>
+                        <td class="text-start;" style="color:white;">{{ team.draw }}</td>
+                        <td class="text-start;" style="color:white;">{{ team.loss }}</td>
+                        <td class="text-start;" style="color:white;">{{ team.season }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+{% endblock %}

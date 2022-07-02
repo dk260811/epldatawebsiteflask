@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Totals
+{% endblock %}
+
+{% block main %}
+    <form action="/stats_totals" method="post">
+        <p style="color: #ffffff;">Here you can see the stats of the season you selected, click on the 
+            table header on the stat you want to sort by</p>
+        <select class="form-select mx-auto w-auto" name="season">
+            <option disabled="" selected="">Select Season</option>
+            {% for season in seasons_list %}
+                <option value="{{ season.season }}">{{ season.season }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+        <div class="mb-3">
+            <table id="totals" class="table table-hover" style="color:white;">
+                <thead>
+                    <tr>  
+                    <th scope="col">Team</th> 
+                    <th style ="cursor: pointer;" onclick="sortTable(2, 'totals')" scope="col">Corners</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(3, 'totals')" scope="col">Corners Against</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(4, 'totals')" scope="col">Shots</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(5, 'totals')" scope="col">Shots Against</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(6, 'totals')" scope="col">Shots on target</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(7, 'totals')" scope="col">Shots on target Against</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(8, 'totals')" scope="col">Fouls</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(9, 'totals')" scope="col">Fouls Against</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(10, 'totals')" scope="col">Yellow Card</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(11, 'totals')" scope="col">Yellow Cards Against</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(12, 'totals')" scope="col">Red Cards</th>
+                    <th style ="cursor: pointer;" onclick="sortTable(13, 'totals')" scope="col">Red Cards Against</th>
+                    <th scope="col">Season</th>
+                    </tr>
+                </thead>
+                {% for stat in stats_list %}
+                    <tr>
+                        <td class="text-start" style="color:white;">{{ stat.team_ft }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.corners_for }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.corners_against }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.shots_for }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.shots_agains }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.shots_on_target_for }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.shots_on_target_against }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.fouls_commited }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.fouls_against }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.yellow_cards }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.yellow_cards_against }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.red_cards }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.red_cards_against }}</td>
+                        <td class="text-start" style="color:white;">{{ stat.season }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+{% endblock %}
