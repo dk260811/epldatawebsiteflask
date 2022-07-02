@@ -3,7 +3,7 @@ import os
 from pickle import NONE
 from telnetlib import PRAGMA_HEARTBEAT, PRAGMA_LOGON
 from tkinter.messagebox import NO
-
+import tkinter
   
 # C:\Users\Lenovo\pyver\py3105\lib\tty.py qetu e kom hek termios
 
